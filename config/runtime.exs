@@ -29,6 +29,14 @@ config :qrstorage, Qrstorage.Repo,
   port: String.to_integer(System.get_env("DATABASE_PORT", "5432")),
   pool_size: String.to_integer(System.get_env("POOL_SIZE", "15")),
   ssl: System.get_env("DATABASE_SSL", "true") == "true",
+  ssl_opts: [
+    verify: :verify_peer,
+    server_name_indication: String.to_charlist(System.get_env("DATABASE_HOST", "")),
+    cacertfile: System.get.env("DATABASE_CA_CERT_FILE"),
+    verify_fun:
+    {&:ssl_verify_hostname.verify_fun/3,
+     [check_hostname: String.to_charlist(System.get_env("DATABASE_HOST", ""))]}
+  ],
   socket_options: maybe_ipv6
 
 # Set possible translations
