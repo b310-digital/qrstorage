@@ -31,11 +31,7 @@ config :qrstorage, Qrstorage.Repo,
   ssl: System.get_env("DATABASE_SSL", "true") == "true",
   ssl_opts: [
     verify: :verify_peer,
-    server_name_indication: String.to_charlist(System.get_env("DATABASE_HOST", "")),
-    cacertfile: System.get_env("DATABASE_CA_CERT_FILE", ""),
-    verify_fun:
-    {&:ssl_verify_hostname.verify_fun/3,
-     [check_hostname: String.to_charlist(System.get_env("DATABASE_HOST", ""))]}
+    cacertfile: System.get.env("DATABASE_CA_CERT_FILE"),
   ],
   socket_options: maybe_ipv6
 
