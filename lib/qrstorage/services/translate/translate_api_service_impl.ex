@@ -30,16 +30,21 @@ defmodule Qrstorage.Services.Translate.TranslateApiServiceImpl do
 
   @impl TranslateApiService
   def translate(text, target_language) do
+    Logger.info("Querying Translation service")
     case DeeplEx.translate(text, :DETECT, map_target_language(target_language)) do
       {:ok, %Tesla.Env{status: status, body: response_body}} ->
         Logger.error("Error while translating text: status: #{status} message: #{response_body}")
         {:error}
 
       {:ok, translation} when is_bitstring(translation) ->
+        Logger.info("Finished querying Translation service")
         {:ok, translation}
 
-      _ ->
-        Logger.error("Error while translating text: #{target_language}")
+      {:error, message} ->
+        Logger.error("Error while translating text: #{message}")
+        {:error}
+      error ->
+        Logger.error("Error while translating text: #{error}")
         {:error}
     end
   end

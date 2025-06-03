@@ -19,6 +19,7 @@ defmodule Qrstorage.Application do
       # Start the Endpoint (http/https)
       QrstorageWeb.Endpoint,
       Qrstorage.Services.Vault,
+      {Finch, name: QrFinch},
       {Oban, oban_config()}
     ]
 

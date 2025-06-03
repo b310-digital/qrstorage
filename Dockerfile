@@ -107,7 +107,7 @@ RUN mix release
 # the compiled release and other runtime necessities
 FROM ${RUNNER_IMAGE} as production
 
-RUN apt-get update -y && apt-get install -y ca-certificates postgresql-client libstdc++6 openssl libncurses5 locales \
+RUN apt-get update -y && apt-get install -y curl iputils-ping ca-certificates postgresql-client libstdc++6 openssl libncurses5 locales \
   && apt-get clean && rm -f /var/lib/apt/lists/*_*
 
 # Set the locale
