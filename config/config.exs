@@ -40,11 +40,11 @@ config :phoenix, :json_library, Jason
 
 # Configure esbuild (the version is required)
 config :esbuild,
-  version: "0.19.11",
+  version: "0.27.3",
   default: [
-    args: ~w(js/app.js --bundle --target=es2020 --outdir=../priv/static/assets),
+    args: ~w(js/app.js --bundle --target=es2020 --outdir=../priv/static/assets --external:/fonts/* --external:/images/* --external:qr-code-styling --alias:@=.),
     cd: Path.expand("../assets", __DIR__),
-    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+    env: %{"NODE_PATH" => [Path.expand("../deps", __DIR__), Mix.Project.build_path()]}
   ]
 
 config :dart_sass,
